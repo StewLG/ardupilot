@@ -21,13 +21,11 @@ void Rover::read_battery(void)
     battery.read();
 }
 
-// read the receiver RSSI as an 8 bit number for MAVLink
-// RC_CHANNELS_SCALED message
-void Rover::read_receiver_rssi(void)
+// read the receiver rssi as an 8 bit number for mavlink
+// rc_channels_scaled message
+void plane::read_receiver_rssi(void)
 {
-    rssi_analog_source->set_pin(g.rssi_pin);
-    float ret = rssi_analog_source->voltage_average() * 50;
-    receiver_rssi = constrain_int16(ret, 0, 255);
+    receiver_rssi = RC_Channel::read_receiver_rssi();
 }
 
 // read the sonars

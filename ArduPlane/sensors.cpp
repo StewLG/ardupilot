@@ -82,18 +82,10 @@ void Plane::read_battery(void)
     }
 }
 
-
-// read the receiver RSSI as an 8 bit number for MAVLink
-// RC_CHANNELS_SCALED message
-void Plane::read_receiver_rssi(void)
+// read the receiver rssi as an 8 bit number for mavlink
+// rc_channels_scaled message
+void plane::read_receiver_rssi(void)
 {
-    // avoid divide by zero
-    if (g.rssi_range <= 0) {
-        receiver_rssi = 0;
-    }else{
-        rssi_analog_source->set_pin(g.rssi_pin);
-        float ret = rssi_analog_source->voltage_average() * 255 / g.rssi_range;
-        receiver_rssi = constrain_int16(ret, 0, 255);
-    }
+    receiver_rssi = RC_Channel::read_receiver_rssi();
 }
 

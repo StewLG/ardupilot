@@ -72,6 +72,9 @@ public:
     // return a limit PWM value
     uint16_t    get_limit_pwm(LimitValue limit) const;
 
+    // read the receiver RSSI as an 8 bit number for MAVLink
+    static uint8_t     read_receiver_rssi(void);    
+    
     // pwm is stored here
     int16_t        radio_in;
 
