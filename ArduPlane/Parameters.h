@@ -3,7 +3,7 @@
 #ifndef PARAMETERS_H
 #define PARAMETERS_H
 
-#include <AP_Common.h>
+#include <AP_Common/AP_Common.h>
 
 // Global parameter class.
 //
@@ -139,7 +139,9 @@ public:
         k_param_rudder_only,
         k_param_gcs3,            // 93
         k_param_gcs_pid_mask,
-        k_param_rssi_channel,
+        
+        // 97: RSSI parameters
+        k_param_rssi_channel = 97,
         k_param_rssi_channel_low_pwm_value,
         k_param_rssi_channel_high_pwm_value,
 
@@ -461,10 +463,10 @@ public:
     AP_Int8 land_flap_percent;
     AP_Int8 takeoff_flap_percent;
     AP_Int8 rssi_pin;
-    AP_Float rssi_range;             // allows to set max voltage for rssi pin such as 5.0, 3.3 etc.     
-    AP_Int8 rssi_channel;
-    AP_Int16 rssi_channel_low_pwm_value;
-    AP_Int16 rssi_channel_high_pwm_value;
+    AP_Float rssi_range;                             // allows to set max voltage for rssi pin such as 5.0, 3.3 etc. 
+    AP_Int8 rssi_channel;                           // allows rssi to be read from given channel as PWM value
+    AP_Int16 rssi_channel_low_pwm_value;             // PWM value for weakest rssi signal
+    AP_Int16 rssi_channel_high_pwm_value;            // PWM value for strongest rssi signal 
     AP_Int8 inverted_flight_ch;             // 0=disabled, 1-8 is channel for inverted flight trigger
     AP_Int8 stick_mixing;
     AP_Float takeoff_throttle_min_speed;
