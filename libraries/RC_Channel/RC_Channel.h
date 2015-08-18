@@ -73,8 +73,13 @@ public:
     uint16_t    get_limit_pwm(LimitValue limit) const;
 
     // read the receiver RSSI as an 8 bit number for MAVLink
-    static uint8_t     read_receiver_rssi(void);    
-    
+    static uint8_t read_receiver_rssi(AP_Int8 rssi_pin, 
+                                      AP_Float rssi_range, 
+                                      AP_HAL::AnalogSource * rssi_analog_source, 
+                                      AP_Int8 rssi_channel, 
+                                      AP_Int16 rssi_channel_low_pwm_value, 
+                                      AP_Int16 rssi_channel_high_pwm_value);
+        
     // pwm is stored here
     int16_t        radio_in;
 
