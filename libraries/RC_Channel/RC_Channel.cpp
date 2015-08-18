@@ -522,8 +522,10 @@ uint16_t RC_Channel::get_limit_pwm(LimitValue limit) const
     return radio_trim;
 }
 
+// SLG COMMENT TO REMOVE -- Note **NOT** set as static here!!!
+
 // read the receiver RSSI as an 8 bit number for MAVLink
-static uint8_t RC_Channel::read_receiver_rssi(AP_Int8 rssi_pin, 
+uint8_t RC_Channel::read_receiver_rssi(AP_Int8 rssi_pin, 
                                   AP_Float rssi_range, 
                                   AP_HAL::AnalogSource * rssi_analog_source, 
                                   AP_Int8 rssi_channel, 
