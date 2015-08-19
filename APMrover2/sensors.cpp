@@ -1,6 +1,7 @@
 // -*- tab-width: 4; Mode: C++; c-basic-offset: 4; indent-tabs-mode: nil -*-
 
 #include "Rover.h"
+#include <RC_Channel/RC_Channel.h>     // RC Channel Library
 
 void Rover::init_barometer(void)
 {
@@ -23,9 +24,9 @@ void Rover::read_battery(void)
 
 // read the receiver rssi as an 8 bit number for mavlink
 // rc_channels_scaled message
-void plane::read_receiver_rssi(void)
+void Rover::read_receiver_rssi(void)
 {
-    receiver_rssi = RC_Channel::read_receiver_rssi();
+    receiver_rssi = RC_Channel::read_receiver_rssi(g.rssi_pin, g.rssi_range, rssi_analog_source, g.rssi_channel, g.rssi_channel_low_pwm_value, g.rssi_channel_high_pwm_value);
 }
 
 // read the sonars
