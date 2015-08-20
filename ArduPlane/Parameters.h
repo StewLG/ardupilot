@@ -452,7 +452,9 @@ public:
     AP_Int32 min_gndspeed_cm;
     AP_Int16 pitch_trim_cd;
     AP_Int16 FBWB_min_altitude_cm;
+#if HIL_SUPPORT	
     AP_Int8  hil_servos;
+#endif	
     AP_Int8  hil_mode;
 
     AP_Int8 compass_enabled;
