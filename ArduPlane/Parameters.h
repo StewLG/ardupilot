@@ -455,7 +455,7 @@ public:
     AP_Int8  hil_servos;
 #if HIL_SUPPORT
     AP_Int8  hil_mode;
-#endif	
+#endif
 
     AP_Int8 compass_enabled;
     AP_Int8 flap_1_percent;
