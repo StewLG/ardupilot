@@ -83,6 +83,7 @@ void Plane::read_battery(void)
     }
 }
 
+
 // read the receiver RSSI as an 8 bit number for MAVLink
 // RC_CHANNELS_SCALED message
 void Plane::read_receiver_rssi(void)
