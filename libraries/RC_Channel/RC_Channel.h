@@ -79,6 +79,16 @@ public:
                                       AP_Int8 rssi_channel, 
                                       AP_Int16 rssi_channel_low_pwm_value, 
                                       AP_Int16 rssi_channel_high_pwm_value);
+							
+    // read the RSSI value from an analog pin								
+	static uint8_t read_pin_rssi(AP_Int8 rssi_pin, 
+					 		    AP_Float rssi_range, 
+							    AP_HAL::AnalogSource * rssi_analog_source);
+
+	// read the RSSI value from a PWM value on a RC channel
+	static uint8_t read_channel_rssi(AP_Int8 rssi_channel, 
+								     AP_Int16 rssi_channel_low_pwm_value, 
+								     AP_Int16 rssi_channel_high_pwm_value);
         
     // pwm is stored here
     int16_t        radio_in;
