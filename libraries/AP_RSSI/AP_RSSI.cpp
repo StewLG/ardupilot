@@ -29,18 +29,26 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
 				
     // @Param: RSSI_PIN
     // @DisplayName: Receiver RSSI sensing pin
-    // @Description: This selects an analog pin for the receiver RSSI voltage. It assumes the voltage is 5V for max rssi, 0V for minimum
+    // @Description: This selects an analog pin for the receiver RSSI voltage.
     // @Values: -1:Disabled, 0:APM2 A0, 1:APM2 A1, 13:APM2 A13, 103:Pixhawk SBUS
     // @User: Standard
-    AP_GROUPINFO("PIN", 1, AP_RSSI, rssi_pin,  -1),	
+    AP_GROUPINFO("PIN", 1, AP_RSSI, rssi_analog_pin,  -1),	
 
-    // @Param: RSSI_RANGE
-    // @DisplayName: Receiver RSSI voltage range
-    // @Description: Receiver RSSI voltage range
+    // @Param: RSSI_PIN_RANGE_LOW
+    // @DisplayName: Receiver RSSI voltage low
+    // @Description: This is the voltage value that the radio receiver will put on the RSSI_PIN when the signal strength is the weakest. Since some radio receivers put out inverted values from what you might otherwise expect, this isn't necessarily a lower value than PIN_RANGE_HIGH. 
     // @Units: Volt
-    // @Values: 3.3:3.3V, 5.0:5V
+    // @Values: 0.0: 0V, 3.3:3.3V, 5.0:5V. Intermedidate values OK.
     // @User: Standard
-    AP_GROUPINFO("RANGE", 2, AP_RSSI, rssi_range,  5.0),	
+    AP_GROUPINFO("PIN_RANGE_LOW", 2, AP_RSSI, rssi_analog_pin_range_low,  0.0),	
+
+    // @Param: RSSI_PIN_RANGE_HIGH
+    // @DisplayName: Receiver RSSI voltage low
+    // @Description: This is the voltage value that the radio receiver will put on the RSSI_PIN when the signal strength is the weakest. Since some radio receivers put out inverted values from what you might otherwise expect, this isn't necessarily a higher value than PIN_RANGE_LOW. 
+    // @Units: Volt
+    // @Values: 0.0: 0V, 3.3:3.3V, 5.0:5V. Intermedidate values OK.
+    // @User: Standard
+    AP_GROUPINFO("PIN_RANGE_HIGH", 2, AP_RSSI, rssi_analog_pin_range_high,  5.0),	
     
     // @Param: RSSI_CHANNEL
     // @DisplayName: Receiver RSSI channel number
@@ -110,47 +118,110 @@ uint8_t AP_RSSI::read_receiver_rssi()
 
 // Private
 // -------
+
+// // read the RSSI value from an analog pin		
+// uint8_t AP_RSSI::read_pin_rssi()
+// {
+	// uint8_t pin_rssi = 0;	
+ // avoid divide by zero
+	// if (rssi_range > 0) {    
+		// // Uh yeah this crashes here.
+		
+			// AP_Float		rssi_pin_range_low;						// Voltage value for weakest rssi signal 
+			// AP_Float		rssi_pin_range_high;                    // Voltage value for strongest rssi signal
+		
+		// rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
+		// rssi_analog_source->set_pin(rssi_pin);
+		// float ret = rssi_analog_source->voltage_average() * 255 / rssi_range;
+		// pin_rssi = constrain_int16(ret, 0, 255);
+	// }
+	// return pin_rssi;
+//}	
 		
 // read the RSSI value from an analog pin		
 uint8_t AP_RSSI::read_pin_rssi()
 {
-	uint8_t pin_rssi = 0;	
+	const int float_multipler = 1000;
+		
+	rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
+	rssi_analog_source->set_pin(rssi_analog_pin);
+	float current_analog_voltage = rssi_analog_source->voltage_average();
 	
-	// avoid divide by zero
-	if (rssi_range > 0) {    
-		// Uh yeah this crashes here.
-		rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
-		rssi_analog_source->set_pin(rssi_pin);
-		float ret = rssi_analog_source->voltage_average() * 255 / rssi_range;
-		pin_rssi = constrain_int16(ret, 0, 255);
-	}
-	return pin_rssi;
+	// Voltage comes in as a float, but the common scaling/clipping/inverting routine takes ints so we convert.
+	// (We lose some precision but millivolts shouldn't matter in this context.)
+	int rssi_pin_current_voltage_int_value = static_cast<int>(round(current_analog_voltage * float_multipler));	
+	int rssi_pin_low_voltage_int_value = static_cast<int>(round(rssi_analog_pin_range_low * float_multipler));
+	int rssi_pin_high_voltage_int_value = static_cast<int>(round(rssi_analog_pin_range_high * float_multipler));	
+		
+	// Scale and constrain integer
+	uint8_t voltage_rssi = scale_and_constrain_integer_rssi(rssi_pin_current_voltage_int_value, rssi_pin_low_voltage_int_value, rssi_pin_high_voltage_int_value);
+	return voltage_rssi;	
 }
+
+// // read the RSSI value from a PWM value on a RC channel
+// uint8_t AP_RSSI::read_channel_rssi()
+// {
+	// uint8_t channel_rssi = 0;		
+	
+	// int rssi_channel_value = hal.rcin->read(rssi_channel-1);
+	// // Note that user-supplied PWM range may be inverted and we accommodate that here. 
+	// //(Some radio receivers put out inverted PWM ranges for RSSI-type values).
+	// bool pwm_range_is_inverted = (rssi_channel_high_pwm_value < rssi_channel_low_pwm_value);
+	// // First, constrain to the possible PWM range - values outside are clipped to ends 
+	// int rssi_channel_value_clipped = constrain_int16(rssi_channel_value, 
+													 // pwm_range_is_inverted ? rssi_channel_high_pwm_value : rssi_channel_low_pwm_value, 
+													 // pwm_range_is_inverted ? rssi_channel_low_pwm_value : rssi_channel_high_pwm_value);
+	// // Then scale to 0-255 RSSI normally is presented in.
+	// int rssi_channel_range = abs(rssi_channel_high_pwm_value - rssi_channel_low_pwm_value);
+	// if (rssi_channel_range == 0) {
+		// // User range isn't meaningful, return 0 for RSSI (and avoid divide by zero)
+		// channel_rssi = 0;
+	// } else {
+		// float conversion_ratio = (float)255 / (float)rssi_channel_range;
+		// int rssi_channel_offset = abs(rssi_channel_value_clipped - rssi_channel_low_pwm_value);
+		// channel_rssi = (int)(rssi_channel_offset * conversion_ratio);
+		// channel_rssi = constrain_int16(channel_rssi, 0, 255);
+	// }   
+	// return channel_rssi;
+// }
 
 // read the RSSI value from a PWM value on a RC channel
 uint8_t AP_RSSI::read_channel_rssi()
 {
-	uint8_t channel_rssi = 0;		
-	
 	int rssi_channel_value = hal.rcin->read(rssi_channel-1);
-	// Note that user-supplied PWM range may be inverted and we accommodate that here. 
-	//(Some radio receivers put out inverted PWM ranges for RSSI-type values).
-	bool pwm_range_is_inverted = (rssi_channel_high_pwm_value < rssi_channel_low_pwm_value);
-	// First, constrain to the possible PWM range - values outside are clipped to ends 
-	int rssi_channel_value_clipped = constrain_int16(rssi_channel_value, 
-													 pwm_range_is_inverted ? rssi_channel_high_pwm_value : rssi_channel_low_pwm_value, 
-													 pwm_range_is_inverted ? rssi_channel_low_pwm_value : rssi_channel_high_pwm_value);
-	// Then scale to 0-255 RSSI normally is presented in.
-	int rssi_channel_range = abs(rssi_channel_high_pwm_value - rssi_channel_low_pwm_value);
-	if (rssi_channel_range == 0) {
-		// User range isn't meaningful, return 0 for RSSI (and avoid divide by zero)
-		channel_rssi = 0;
-	} else {
-		float conversion_ratio = (float)255 / (float)rssi_channel_range;
-		int rssi_channel_offset = abs(rssi_channel_value_clipped - rssi_channel_low_pwm_value);
-		channel_rssi = (int)(rssi_channel_offset * conversion_ratio);
-		channel_rssi = constrain_int16(channel_rssi, 0, 255);
-	}   
+	uint8_t channel_rssi = scale_and_constrain_integer_rssi(rssi_channel_value, rssi_channel_low_pwm_value, rssi_channel_high_pwm_value);
 	return channel_rssi;
 }
+
+// Scale and constrain an integer rssi value to the 0-255 value RSSI is expressed in
+uint8_t AP_RSSI::scale_and_constrain_integer_rssi(int current_rssi_value, int low_rssi_range, int high_rssi_range)
+{
+	uint8_t constrained_value = 0;		
+	
+	// Note that user-supplied ranges may be inverted and we accommodate that here. 
+	//(Some radio receivers put out inverted ranges for RSSI-type values).
+	bool range_is_inverted = (high_rssi_range < low_rssi_range);
+	// First, constrain to the possible range - values outside are clipped to ends 
+	int rssi_value_clipped = constrain_int16(current_rssi_value, 
+											 range_is_inverted ? high_rssi_range : low_rssi_range, 
+											 range_is_inverted ? low_rssi_range : high_rssi_range);
+	// Then scale to 0-255 RSSI normally is presented in.
+	int rssi_value_range = abs(high_rssi_range - low_rssi_range);
+	if (rssi_value_range == 0) {
+		// User range isn't meaningful, return 0 for RSSI (and avoid divide by zero)
+		constrained_value = 0;
+	} else {
+		float conversion_ratio = (float)255 / (float)rssi_value_range;
+		int rssi_offset = abs(rssi_value_clipped - low_rssi_range);
+		constrained_value = (int)(rssi_offset * conversion_ratio);
+		constrained_value = constrain_int16(constrained_value, 0, 255);
+	}   
+	return constrained_value;
+}
+
+
+
+
+
+
 

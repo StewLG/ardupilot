@@ -39,10 +39,10 @@ public:
     static const struct AP_Param::GroupInfo var_info[];		
 	
     // RSSI parameters
-	AP_Int8 	    rssi_type;	
-    AP_Int8     	rssi_pin;    							// Analog pin RSSI value found on
-	// TODO: rssi_pin_min_range and rssi_pin_max_range
-    AP_Float        rssi_range;                             // allows to set max voltage for rssi pin such as 5.0, 3.3 etc. 
+	AP_Int8 	    rssi_type;	                            // Type of RSSI being used
+    AP_Int8     	rssi_analog_pin;    					// Analog pin RSSI value found on
+	AP_Float		rssi_analog_pin_range_low;	  		    // Voltage value for weakest rssi signal 
+	AP_Float		rssi_analog_pin_range_high;             // Voltage value for strongest rssi signal
     AP_Int8         rssi_channel;                           // allows rssi to be read from given channel as PWM value
     AP_Int16        rssi_channel_low_pwm_value;             // PWM value for weakest rssi signal
     AP_Int16        rssi_channel_high_pwm_value;      	    // PWM value for strongest rssi signal 
@@ -61,6 +61,9 @@ private:
 
 	// read the RSSI value from a PWM value on a RC channel
 	uint8_t read_channel_rssi();
+	
+	// Scale and constrain an integer rssi value to the 0-255 value RSSI is expressed in	
+	uint8_t scale_and_constrain_integer_rssi(int current_rssi_value, int low_rssi_range, int high_rssi_range);
 };
 
 #endif // AP_RSSI_H
