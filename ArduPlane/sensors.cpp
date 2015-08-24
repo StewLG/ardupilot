@@ -2,7 +2,7 @@
 
 #include "Plane.h"
 #include <RC_Channel/RC_Channel.h>     // RC Channel Library
-#include <RSSI/RSSI.h>
+#include <AP_RSSI/AP_RSSI.h>
 
 void Plane::init_barometer(void)
 {
@@ -90,7 +90,7 @@ void Plane::read_battery(void)
 void Plane::read_receiver_rssi(void)
 {
 	//Rssi::RssiType rssiEnum = static_cast<Rssi::RssiType>(g.rssi_type);
-	Rssi::RssiType rssiEnum = static_cast<Rssi::RssiType>(g.rssi_type.get());
+	AP_RSSI::RssiType rssiEnum = static_cast<AP_RSSI::RssiType>(g.rssi_type.get());
     receiver_rssi = rssi.read_receiver_rssi(rssiEnum);
 }
 

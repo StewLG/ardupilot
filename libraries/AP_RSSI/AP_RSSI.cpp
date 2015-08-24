@@ -14,11 +14,11 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-#include <Rssi/Rssi.h>
+#include <AP_RSSI/AP_RSSI.h>
 
 extern const AP_HAL::HAL& hal;
 
-const AP_Param::GroupInfo Rssi::var_info[] PROGMEM = {
+const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
 				
     // @Param: RSSI_PIN
     // @DisplayName: Receiver RSSI sensing pin
@@ -26,7 +26,7 @@ const AP_Param::GroupInfo Rssi::var_info[] PROGMEM = {
     // @Values: -1:Disabled, 0:APM2 A0, 1:APM2 A1, 13:APM2 A13, 103:Pixhawk SBUS
     // @User: Standard
     //GSCALAR(rssi_pin,            "RSSI_PIN",         -1),
-    AP_GROUPINFO("RSSI_PIN", 0, Rssi, rssi_pin,  -1),	
+    AP_GROUPINFO("RSSI_PIN", 0, AP_RSSI, rssi_pin,  -1),	
 
     // @Param: RSSI_RANGE
     // @DisplayName: Receiver RSSI voltage range
@@ -35,7 +35,7 @@ const AP_Param::GroupInfo Rssi::var_info[] PROGMEM = {
     // @Values: 3.3:3.3V, 5.0:5V
     // @User: Standard
     //GSCALAR(rssi_range,          "RSSI_RANGE",         5.0),
-    AP_GROUPINFO("RSSI_RANGE", 1, Rssi, rssi_range,  5.0),	
+    AP_GROUPINFO("RSSI_RANGE", 1, AP_RSSI, rssi_range,  5.0),	
     
     // @Param: RSSI_CHANNEL
     // @DisplayName: Receiver RSSI channel number
@@ -44,7 +44,7 @@ const AP_Param::GroupInfo Rssi::var_info[] PROGMEM = {
     // @Values: 0:Disabled,1:Channel1,2:Channel2,3:Channel3,4:Channel4,5:Channel5,6:Channel6,7:Channel7,8:Channel8
     // @User: Standard
     //GSCALAR(rssi_channel,          "RSSI_CHANNEL",         0),
-    AP_GROUPINFO("RSSI_CHANNEL", 2, Rssi, rssi_channel,  0),		
+    AP_GROUPINFO("RSSI_CHANNEL", 2, AP_RSSI, rssi_channel,  0),		
     
     // @Param: RSSI_CHAN_LOW
     // @DisplayName: Receiver RSSI PWM low value
@@ -53,16 +53,16 @@ const AP_Param::GroupInfo Rssi::var_info[] PROGMEM = {
     // @Range: 0 2000
     // @User: Standard
     //GSCALAR(rssi_channel_low_pwm_value, "RSSI_CHAN_LOW", 1000), 
-    AP_GROUPINFO("RSSI_CHAN_LOW", 3, Rssi, rssi_channel_low_pwm_value,  1000),		
+    AP_GROUPINFO("RSSI_CHAN_LOW", 3, AP_RSSI, rssi_channel_low_pwm_value,  1000),		
     
     // @Param: RSSI_CHAN_HIGH
     // @DisplayName: Receiver RSSI PWM high value
-    // @Description: This is the PPM value that the radio receiver will put on the RSSI_CHANNEL when the signal strength is the strongest. Since some radio receivers put out inverted values from what you might otherwise expect, this isn't necessarily a higher value than RSSI_CHAN_LOW. 
+    // @Description: This is the PWM value that the radio receiver will put on the RSSI_CHANNEL when the signal strength is the strongest. Since some radio receivers put out inverted values from what you might otherwise expect, this isn't necessarily a higher value than RSSI_CHAN_LOW. 
     // @Units: Microseconds
     // @Range: 0 2000
     // @User: Standard
     //GSCALAR(rssi_channel_high_pwm_value, "RSSI_CHAN_HIGH", 2000),  
-    AP_GROUPINFO("RSSI_CHAN_HIGH", 4, Rssi, rssi_channel_high_pwm_value,  2000),		
+    AP_GROUPINFO("RSSI_CHAN_HIGH", 4, AP_RSSI, rssi_channel_high_pwm_value,  2000),		
     
     AP_GROUPEND
 };
@@ -71,19 +71,19 @@ const AP_Param::GroupInfo Rssi::var_info[] PROGMEM = {
 // ------
 
 // constructor
-Rssi::Rssi()
+AP_RSSI::AP_RSSI()
 {		
     AP_Param::setup_object_defaults(this, var_info);	
 	rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);	
 }
 
 // destructor
-Rssi::~Rssi(void)
+AP_RSSI::~AP_RSSI(void)
 {		
 }
 
 // read the receiver RSSI value as an 8 bit number
-uint8_t Rssi::read_receiver_rssi(RssiType rssiType)
+uint8_t AP_RSSI::read_receiver_rssi(RssiType rssiType)
 {
 	// Default to 0 RSSI
     uint8_t receiver_rssi = 0;	
@@ -109,7 +109,7 @@ uint8_t Rssi::read_receiver_rssi(RssiType rssiType)
 // -------
 		
 // read the RSSI value from an analog pin		
-uint8_t Rssi::read_pin_rssi()
+uint8_t AP_RSSI::read_pin_rssi()
 {
 	uint8_t pin_rssi = 0;	
 	
@@ -123,7 +123,7 @@ uint8_t Rssi::read_pin_rssi()
 }
 
 // read the RSSI value from a PWM value on a RC channel
-uint8_t Rssi::read_channel_rssi()
+uint8_t AP_RSSI::read_channel_rssi()
 {
 	uint8_t channel_rssi = 0;		
 	

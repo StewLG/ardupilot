@@ -14,8 +14,8 @@
    along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
  
-#ifndef RSSI_H
-#define RSSI_H
+#ifndef AP_RSSI_H
+#define AP_RSSI_H
 
 // Clean these up? Are all needed?
 #include <AP_Common/AP_Common.h>
@@ -23,7 +23,7 @@
 #include <AP_Param/AP_Param.h>
 #include <AP_Math/AP_Math.h>
 
-class Rssi 
+class AP_RSSI
 {
 public:
     enum RssiType {
@@ -33,10 +33,10 @@ public:
     };	
 	
     // constructor
-    Rssi();
+    AP_RSSI();
 
     // destructor
-    ~Rssi(void);
+    ~AP_RSSI(void);
     
     static const struct AP_Param::GroupInfo var_info[];		
 	
@@ -64,6 +64,6 @@ private:
 	uint8_t read_channel_rssi();
 };
 
-#endif // RSSI_H
+#endif // AP_RSSI_H
 	
 	

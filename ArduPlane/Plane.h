@@ -88,7 +88,7 @@
 
 #include <AP_OpticalFlow/AP_OpticalFlow.h>     // Optical Flow library
 
-#include <Rssi/Rssi.h>						   // RSSI library
+#include <AP_RSSI/AP_RSSI.h>						   // RSSI library
 
 // Configuration
 #include "config.h"
@@ -180,7 +180,7 @@ private:
 
     AP_InertialSensor ins;
 	
-	Rssi rssi;
+	AP_RSSI rssi;
 
 #if RANGEFINDER_ENABLED == ENABLED
     // rangefinder
@@ -248,9 +248,10 @@ private:
     // selected navigation controller
     AP_SpdHgtControl *SpdHgt_Controller = &TECS_controller;
 
-    // Analog Inputs
-    // a pin for reading the receiver RSSI voltage. 
-    AP_HAL::AnalogSource *rssi_analog_source;
+// REMOVE THIS WHEN SURE
+    // // Analog Inputs
+    // // a pin for reading the receiver RSSI voltage. 
+    // AP_HAL::AnalogSource *rssi_analog_source;
 
     // Relay
     AP_Relay relay;
