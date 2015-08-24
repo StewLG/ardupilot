@@ -49,7 +49,6 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Microseconds
     // @Range: 0 2000
     // @User: Standard
-    //GSCALAR(rssi_channel_low_pwm_value, "RSSI_CHAN_LOW", 1000), 
     AP_GROUPINFO("CHAN_LOW", 3, AP_RSSI, rssi_channel_low_pwm_value,  1000),		
     
     // @Param: RSSI_CHAN_HIGH
@@ -58,7 +57,6 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Microseconds
     // @Range: 0 2000
     // @User: Standard
-    //GSCALAR(rssi_channel_high_pwm_value, "RSSI_CHAN_HIGH", 2000),  
     AP_GROUPINFO("CHAN_HIGH", 4, AP_RSSI, rssi_channel_high_pwm_value,  2000),		
     
     AP_GROUPEND
@@ -70,7 +68,8 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
 // constructor
 AP_RSSI::AP_RSSI()
 {		
-    //AP_Param::setup_object_defaults(this, var_info);	
+    AP_Param::setup_object_defaults(this, var_info);
+    // Moving to routine; hopefully not too slow? Is it crashing?
 	//rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);	
 }
 
@@ -85,19 +84,19 @@ uint8_t AP_RSSI::read_receiver_rssi(RssiType rssiType)
 	// Default to 0 RSSI
     uint8_t receiver_rssi = 0;	
 		
-	// switch (rssiType) {
-		// case RSSI_DISABLED :
-		   // receiver_rssi = 0;
-		   // break;
-		// case RSSI_ANALOG_PIN :
-		   // receiver_rssi = read_pin_rssi();
-		   // break;
-		// case RSSI_RC_CHANNEL_VALUE :
-		   // receiver_rssi = read_channel_rssi();
-		   // break;
-		// default : 	
-		   // receiver_rssi = 0;		
-	// }
+	switch (rssiType) {
+		case RssiType::RSSI_DISABLED :
+			receiver_rssi = 0;
+		    break;
+		case RssiType::RSSI_ANALOG_PIN :
+		    receiver_rssi = read_pin_rssi();
+		    break;
+		case RssiType::RSSI_RC_CHANNEL_VALUE :
+			receiver_rssi = read_channel_rssi();
+		    break;
+		default : 	
+		    receiver_rssi = 0;		
+	}
 	
 	return receiver_rssi;
 }
@@ -111,7 +110,8 @@ uint8_t AP_RSSI::read_pin_rssi()
 	uint8_t pin_rssi = 0;	
 	
 	// avoid divide by zero
-	if (rssi_range > 0) {            
+	if (rssi_range > 0) {     
+		rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
 		rssi_analog_source->set_pin(rssi_pin);
 		float ret = rssi_analog_source->voltage_average() * 255 / rssi_range;
 		pin_rssi = constrain_int16(ret, 0, 255);
