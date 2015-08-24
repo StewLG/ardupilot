@@ -76,7 +76,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
 AP_RSSI::AP_RSSI()
 {		
     AP_Param::setup_object_defaults(this, var_info);
-    // Moving to routine; hopefully not too slow? Is it crashing?
+    // Moving to routine; hopefully not too slow? This appears to crash when run here. 
 	//rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
 }
 
@@ -117,7 +117,8 @@ uint8_t AP_RSSI::read_pin_rssi()
 	uint8_t pin_rssi = 0;	
 	
 	// avoid divide by zero
-	if (rssi_range > 0) {     
+	if (rssi_range > 0) {    
+		// Uh yeah this crashes here.
 		rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
 		rssi_analog_source->set_pin(rssi_pin);
 		float ret = rssi_analog_source->voltage_average() * 255 / rssi_range;
