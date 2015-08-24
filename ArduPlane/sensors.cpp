@@ -2,6 +2,7 @@
 
 #include "Plane.h"
 #include <RC_Channel/RC_Channel.h>     // RC Channel Library
+#include <RSSI/RSSI.h>
 
 void Plane::init_barometer(void)
 {
@@ -88,6 +89,8 @@ void Plane::read_battery(void)
 // RC_CHANNELS_SCALED message
 void Plane::read_receiver_rssi(void)
 {
-    receiver_rssi = RC_Channel::read_receiver_rssi(g.rssi_pin, g.rssi_range, rssi_analog_source, g.rssi_channel, g.rssi_channel_low_pwm_value, g.rssi_channel_high_pwm_value);
+	//Rssi::RssiType rssiEnum = static_cast<Rssi::RssiType>(g.rssi_type);
+	Rssi::RssiType rssiEnum = static_cast<Rssi::RssiType>(g.rssi_type.get());
+    receiver_rssi = rssi.read_receiver_rssi(rssiEnum);
 }
 

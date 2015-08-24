@@ -87,8 +87,6 @@ void Plane::setup()
 
     notify.init(false);
 
-    rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
-
     init_ardupilot();
 
     // initialise the main loop scheduler

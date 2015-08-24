@@ -101,7 +101,7 @@ public:
         k_param_sonar_old, // unused
         k_param_log_bitmask,
         k_param_BoardConfig,
-        k_param_rssi_range,
+		k_param_rssi_type,				// Formerly k_param_rssi_range; hopefully index re-use is cool?
         k_param_flapin_channel,
         k_param_flaperon_output,
         k_param_gps,
@@ -140,10 +140,10 @@ public:
         k_param_gcs3,            // 93
         k_param_gcs_pid_mask,
         
-        // 97: RSSI parameters
-        k_param_rssi_channel = 97,
-        k_param_rssi_channel_low_pwm_value,
-        k_param_rssi_channel_high_pwm_value,
+        // // 97: RSSI parameters
+        // k_param_rssi_channel = 97,
+        // k_param_rssi_channel_low_pwm_value,
+        // k_param_rssi_channel_high_pwm_value,
 
         // 100: Arming parameters
         k_param_arming = 100,
@@ -226,8 +226,8 @@ public:
         // Battery monitoring parameters
         //
         k_param_battery = 166,
-        k_param_rssi_pin,
-        k_param_battery_volt_pin,   // unused
+        //k_param_rssi_pin,
+        k_param_battery_volt_pin = 168,   // unused
         k_param_battery_curr_pin,   // unused - 169
 
         //
@@ -464,11 +464,9 @@ public:
     AP_Int8 flap_2_speed;
     AP_Int8 land_flap_percent;
     AP_Int8 takeoff_flap_percent;
-    AP_Int8 rssi_pin;
-    AP_Float rssi_range;                             // allows to set max voltage for rssi pin such as 5.0, 3.3 etc. 
-    AP_Int8 rssi_channel;                           // allows rssi to be read from given channel as PWM value
-    AP_Int16 rssi_channel_low_pwm_value;             // PWM value for weakest rssi signal
-    AP_Int16 rssi_channel_high_pwm_value;            // PWM value for strongest rssi signal 
+    	
+	AP_Int8 rssi_type;
+	
     AP_Int8 inverted_flight_ch;             // 0=disabled, 1-8 is channel for inverted flight trigger
     AP_Int8 stick_mixing;
     AP_Float takeoff_throttle_min_speed;
