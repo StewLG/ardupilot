@@ -90,7 +90,7 @@ void Plane::read_battery(void)
 void Plane::read_receiver_rssi(void)
 {
 	//Rssi::RssiType rssiEnum = static_cast<Rssi::RssiType>(g.rssi_type);
-	AP_RSSI::RssiType rssiEnum = static_cast<AP_RSSI::RssiType>(g.rssi_type.get());
-    receiver_rssi = rssi.read_receiver_rssi(rssiEnum);
+	//AP_RSSI::RssiType rssiEnum = static_cast<AP_RSSI::RssiType>(g.rssi_type.get());
+    receiver_rssi = rssi.read_receiver_rssi();
 }
 

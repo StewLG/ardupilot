@@ -20,12 +20,19 @@ extern const AP_HAL::HAL& hal;
 
 const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
 				
+	// @Param: RSSI_TYPE
+	// @DisplayName: RSSI Type
+	// @Description: Radio Receiver RSSI type. If your radio receiver supports RSSI of some kind, set it here, then set its associated RSSI_XXXXX parameters, if any.
+	// @Values: 0:Disabled,1:AnalogPin,2:RCChannelPwmValue
+	// @User: Standard
+    AP_GROUPINFO("TYPE", 0, AP_RSSI, rssi_type,  0),		
+				
     // @Param: RSSI_PIN
     // @DisplayName: Receiver RSSI sensing pin
     // @Description: This selects an analog pin for the receiver RSSI voltage. It assumes the voltage is 5V for max rssi, 0V for minimum
     // @Values: -1:Disabled, 0:APM2 A0, 1:APM2 A1, 13:APM2 A13, 103:Pixhawk SBUS
     // @User: Standard
-    AP_GROUPINFO("PIN", 0, AP_RSSI, rssi_pin,  -1),	
+    AP_GROUPINFO("PIN", 1, AP_RSSI, rssi_pin,  -1),	
 
     // @Param: RSSI_RANGE
     // @DisplayName: Receiver RSSI voltage range
@@ -33,7 +40,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Volt
     // @Values: 3.3:3.3V, 5.0:5V
     // @User: Standard
-    AP_GROUPINFO("RANGE", 1, AP_RSSI, rssi_range,  5.0),	
+    AP_GROUPINFO("RANGE", 2, AP_RSSI, rssi_range,  5.0),	
     
     // @Param: RSSI_CHANNEL
     // @DisplayName: Receiver RSSI channel number
@@ -41,7 +48,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: 
     // @Values: 0:Disabled,1:Channel1,2:Channel2,3:Channel3,4:Channel4,5:Channel5,6:Channel6,7:Channel7,8:Channel8
     // @User: Standard
-    AP_GROUPINFO("CHANNEL", 2, AP_RSSI, rssi_channel,  0),		
+    AP_GROUPINFO("CHANNEL", 3, AP_RSSI, rssi_channel,  0),		
     
     // @Param: RSSI_CHAN_LOW
     // @DisplayName: Receiver RSSI PWM low value
@@ -49,7 +56,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Microseconds
     // @Range: 0 2000
     // @User: Standard
-    AP_GROUPINFO("CHAN_LOW", 3, AP_RSSI, rssi_channel_low_pwm_value,  1000),		
+    AP_GROUPINFO("CHAN_LOW", 4, AP_RSSI, rssi_channel_low_pwm_value,  1000),		
     
     // @Param: RSSI_CHAN_HIGH
     // @DisplayName: Receiver RSSI PWM high value
@@ -57,7 +64,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Microseconds
     // @Range: 0 2000
     // @User: Standard
-    AP_GROUPINFO("CHAN_HIGH", 4, AP_RSSI, rssi_channel_high_pwm_value,  2000),		
+    AP_GROUPINFO("CHAN_HIGH", 5, AP_RSSI, rssi_channel_high_pwm_value,  2000),		
     
     AP_GROUPEND
 };
@@ -70,7 +77,7 @@ AP_RSSI::AP_RSSI()
 {		
     AP_Param::setup_object_defaults(this, var_info);
     // Moving to routine; hopefully not too slow? Is it crashing?
-	//rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);	
+	//rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
 }
 
 // destructor
@@ -79,12 +86,12 @@ AP_RSSI::~AP_RSSI(void)
 }
 
 // read the receiver RSSI value as an 8 bit number
-uint8_t AP_RSSI::read_receiver_rssi(RssiType rssiType)
+uint8_t AP_RSSI::read_receiver_rssi()
 {
 	// Default to 0 RSSI
     uint8_t receiver_rssi = 0;	
 		
-	switch (rssiType) {
+	switch (rssi_type) {
 		case RssiType::RSSI_DISABLED :
 			receiver_rssi = 0;
 		    break;

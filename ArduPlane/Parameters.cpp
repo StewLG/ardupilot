@@ -911,14 +911,7 @@ const AP_Param::Info Plane::var_info[] PROGMEM = {
     // @User: Advanced
     GSCALAR(override_channel,      "OVERRIDE_CHAN",  0),
 #endif
-  
-	// @Param: RSSI_TYPE
-	// @DisplayName: RSSI Type
-	// @Description: Radio Receiver RSSI type. If your radio receiver supports RSSI of some kind, set it here, then set its associated RSSI_XXXXX parameters, if any.
-	// @Values: 0:Disabled,1:AnalogPin,2:RCChannelPwmValue
-	// @User: Standard
-	GSCALAR(rssi_type, 				"RSSI_TYPE", 0),	
-    
+      
     // @Param: INVERTEDFLT_CH
     // @DisplayName: Inverted flight channel
     // @Description: A RC input channel number to enable inverted flight. If this is non-zero then the APM will monitor the corresponding RC input channel and will enable inverted flight when the channel goes above 1750.

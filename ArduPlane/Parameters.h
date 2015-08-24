@@ -89,7 +89,7 @@ public:
         k_param_att_controller,
         k_param_mixing_gain,
         k_param_scheduler,
-        k_param_relay,
+        k_param_relay,    // 45
         k_param_takeoff_throttle_delay,
         k_param_skip_gyro_cal,
         k_param_auto_fbw_steer,
@@ -100,9 +100,9 @@ public:
         k_param_hil_err_limit,
         k_param_sonar_old, // unused
         k_param_log_bitmask,
-        k_param_BoardConfig,
-		k_param_rssi_type,				// Formerly k_param_rssi_range; hopefully index re-use is cool?
-        k_param_flapin_channel,
+        k_param_BoardConfig = 56,
+		k_param_rssi_range,				// unused; replaced by k_param_rssi library parameters
+        k_param_flapin_channel = 58,
         k_param_flaperon_output,
         k_param_gps,
         k_param_autotune_level,
@@ -140,10 +140,8 @@ public:
         k_param_gcs3,            // 93
         k_param_gcs_pid_mask,
         
-        // // 97: RSSI parameters
-        k_param_rssi = 97,                    // Placeholder, huH? I don't understand why GOBJECT(rssi, "RSSI_",  AP_RSSI), needs to make this???
-        // k_param_rssi_channel_low_pwm_value,
-        // k_param_rssi_channel_high_pwm_value,
+        // 97: RSSI parameters
+        k_param_rssi = 97,                    
 
         // 100: Arming parameters
         k_param_arming = 100,
@@ -226,7 +224,7 @@ public:
         // Battery monitoring parameters
         //
         k_param_battery = 166,
-        //k_param_rssi_pin,
+        k_param_rssi_pin,				  // unused; replaced by k_param_rssi library parameters
         k_param_battery_volt_pin = 168,   // unused
         k_param_battery_curr_pin,   // unused - 169
 
@@ -464,8 +462,6 @@ public:
     AP_Int8 flap_2_speed;
     AP_Int8 land_flap_percent;
     AP_Int8 takeoff_flap_percent;
-    	
-	AP_Int8 rssi_type;
 	
     AP_Int8 inverted_flight_ch;             // 0=disabled, 1-8 is channel for inverted flight trigger
     AP_Int8 stick_mixing;
