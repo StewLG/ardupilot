@@ -25,8 +25,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Description: This selects an analog pin for the receiver RSSI voltage. It assumes the voltage is 5V for max rssi, 0V for minimum
     // @Values: -1:Disabled, 0:APM2 A0, 1:APM2 A1, 13:APM2 A13, 103:Pixhawk SBUS
     // @User: Standard
-    //GSCALAR(rssi_pin,            "RSSI_PIN",         -1),
-    AP_GROUPINFO("RSSI_PIN", 0, AP_RSSI, rssi_pin,  -1),	
+    AP_GROUPINFO("PIN", 0, AP_RSSI, rssi_pin,  -1),	
 
     // @Param: RSSI_RANGE
     // @DisplayName: Receiver RSSI voltage range
@@ -34,8 +33,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Volt
     // @Values: 3.3:3.3V, 5.0:5V
     // @User: Standard
-    //GSCALAR(rssi_range,          "RSSI_RANGE",         5.0),
-    AP_GROUPINFO("RSSI_RANGE", 1, AP_RSSI, rssi_range,  5.0),	
+    AP_GROUPINFO("RANGE", 1, AP_RSSI, rssi_range,  5.0),	
     
     // @Param: RSSI_CHANNEL
     // @DisplayName: Receiver RSSI channel number
@@ -43,8 +41,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: 
     // @Values: 0:Disabled,1:Channel1,2:Channel2,3:Channel3,4:Channel4,5:Channel5,6:Channel6,7:Channel7,8:Channel8
     // @User: Standard
-    //GSCALAR(rssi_channel,          "RSSI_CHANNEL",         0),
-    AP_GROUPINFO("RSSI_CHANNEL", 2, AP_RSSI, rssi_channel,  0),		
+    AP_GROUPINFO("CHANNEL", 2, AP_RSSI, rssi_channel,  0),		
     
     // @Param: RSSI_CHAN_LOW
     // @DisplayName: Receiver RSSI PWM low value
@@ -53,7 +50,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Range: 0 2000
     // @User: Standard
     //GSCALAR(rssi_channel_low_pwm_value, "RSSI_CHAN_LOW", 1000), 
-    AP_GROUPINFO("RSSI_CHAN_LOW", 3, AP_RSSI, rssi_channel_low_pwm_value,  1000),		
+    AP_GROUPINFO("CHAN_LOW", 3, AP_RSSI, rssi_channel_low_pwm_value,  1000),		
     
     // @Param: RSSI_CHAN_HIGH
     // @DisplayName: Receiver RSSI PWM high value
@@ -62,7 +59,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Range: 0 2000
     // @User: Standard
     //GSCALAR(rssi_channel_high_pwm_value, "RSSI_CHAN_HIGH", 2000),  
-    AP_GROUPINFO("RSSI_CHAN_HIGH", 4, AP_RSSI, rssi_channel_high_pwm_value,  2000),		
+    AP_GROUPINFO("CHAN_HIGH", 4, AP_RSSI, rssi_channel_high_pwm_value,  2000),		
     
     AP_GROUPEND
 };

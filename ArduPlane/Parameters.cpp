@@ -1189,6 +1189,10 @@ const AP_Param::Info Plane::var_info[] PROGMEM = {
     GOBJECTN(EKF, NavEKF, "EKF_", NavEKF),
 #endif
 
+    // @Group: RSSI_
+    // @Path: ../libraries/AP_RSSI/AP_RSSI.cpp
+	GOBJECT(rssi, "RSSI_",  AP_RSSI),
+
     AP_VAREND
 };
 

@@ -141,7 +141,7 @@ public:
         k_param_gcs_pid_mask,
         
         // // 97: RSSI parameters
-        // k_param_rssi_channel = 97,
+        k_param_rssi = 97,                    // Placeholder, huH? I don't understand why GOBJECT(rssi, "RSSI_",  AP_RSSI), needs to make this???
         // k_param_rssi_channel_low_pwm_value,
         // k_param_rssi_channel_high_pwm_value,
 
