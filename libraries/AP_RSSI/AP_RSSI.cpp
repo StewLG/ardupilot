@@ -73,8 +73,8 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
 // constructor
 AP_RSSI::AP_RSSI()
 {		
-    AP_Param::setup_object_defaults(this, var_info);	
-	rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);	
+    //AP_Param::setup_object_defaults(this, var_info);	
+	//rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);	
 }
 
 // destructor
@@ -88,19 +88,19 @@ uint8_t AP_RSSI::read_receiver_rssi(RssiType rssiType)
 	// Default to 0 RSSI
     uint8_t receiver_rssi = 0;	
 		
-	switch (rssiType) {
-		case RSSI_DISABLED :
-		   receiver_rssi = 0;
-		   break;
-		case RSSI_ANALOG_PIN :
-		   receiver_rssi = read_pin_rssi();
-		   break;
-		case RSSI_RC_CHANNEL_VALUE :
-		   receiver_rssi = read_channel_rssi();
-		   break;
-		default : 	
-		   receiver_rssi = 0;		
-	}
+	// switch (rssiType) {
+		// case RSSI_DISABLED :
+		   // receiver_rssi = 0;
+		   // break;
+		// case RSSI_ANALOG_PIN :
+		   // receiver_rssi = read_pin_rssi();
+		   // break;
+		// case RSSI_RC_CHANNEL_VALUE :
+		   // receiver_rssi = read_channel_rssi();
+		   // break;
+		// default : 	
+		   // receiver_rssi = 0;		
+	// }
 	
 	return receiver_rssi;
 }
