@@ -19,7 +19,7 @@
 extern const AP_HAL::HAL& hal;
 
 const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
-                
+                                
     // @Param: RSSI_TYPE
     // @DisplayName: RSSI Type
     // @Description: Radio Receiver RSSI type. If your radio receiver supports RSSI of some kind, set it here, then set its associated RSSI_XXXXX parameters, if any.
