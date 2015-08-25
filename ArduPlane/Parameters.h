@@ -141,6 +141,9 @@ public:
         k_param_gcs_pid_mask,
         k_param_crash_detection_enable,
 
+        // 97: RSSI
+        k_param_rssi = 97,
+        
         // 100: Arming parameters
         k_param_arming = 100,
 
