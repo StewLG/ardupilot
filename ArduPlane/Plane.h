@@ -92,6 +92,8 @@
 
 #include <AP_OpticalFlow/AP_OpticalFlow.h>     // Optical Flow library
 
+#include <AP_RSSI/AP_RSSI.h>                   // RSSI Library
+
 // Configuration
 #include "config.h"
 
@@ -181,6 +183,8 @@ private:
     Compass compass;
 
     AP_InertialSensor ins;
+    
+    AP_RSSI rssi;    
 
 #if RANGEFINDER_ENABLED == ENABLED
     // rangefinder
