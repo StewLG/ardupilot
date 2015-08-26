@@ -41,7 +41,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Volt
     // @Values: 0.0: 0V, 3.3:3.3V, 5.0:5V. Intermedidate values OK.
     // @User: Standard
-    AP_GROUPINFO("PIN_RANGE_LOW", 2, AP_RSSI, rssi_analog_pin_range_low,  0.0),
+    AP_GROUPINFO("PIN_RANGE_LOW", 2, AP_RSSI, rssi_analog_pin_range_low, 0.0f),
 
     // @Param: RSSI_PIN_RANGE_HIGH
     // @DisplayName: Receiver RSSI voltage low
@@ -49,7 +49,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Volt
     // @Values: 0.0: 0V, 3.3:3.3V, 5.0:5V. Intermedidate values OK.
     // @User: Standard
-//    AP_GROUPINFO("PIN_RANGE_HIGH", 3, AP_RSSI, rssi_analog_pin_range_high,  5.0),
+//    AP_GROUPINFO("PIN_RANGE_HIGH", 3, AP_RSSI, rssi_analog_pin_range_high, 5.0f),
     
     // @Param: RSSI_CHANNEL
     // @DisplayName: Receiver RSSI channel number
