@@ -29,11 +29,11 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     AP_GROUPINFO("TYPE", 0, AP_RSSI, rssi_type,  0),
                 
     // @Param: RSSI_PIN
-    // @DisplayName: Receiver RSSI sensing pin
-    // @Description: This selects an analog pin for the receiver RSSI voltage.
-    // @Values: -1:Disabled, 0:APM2 A0, 1:APM2 A1, 13:APM2 A13, 103:Pixhawk SBUS
+    // @DisplayName: Receiver RSSI analog sensing pin
+    // @Description: This selects an analog pin where the receiver RSSI voltage will be read.
+    // @Values: 0:APM2 A0, 1:APM2 A1, 13:APM2 A13, 103:Pixhawk SBUS
     // @User: Standard
-    AP_GROUPINFO("PIN", 1, AP_RSSI, rssi_analog_pin,  -1),
+    AP_GROUPINFO("ANA_PIN", 1, AP_RSSI, rssi_analog_pin,  0),
 
     // @Param: RSSI_PIN_RANGE_LOW
     // @DisplayName: Receiver RSSI voltage low
@@ -148,14 +148,13 @@ uint8_t AP_RSSI::read_pin_rssi()
     const int float_multipler = 1000;
         
     // this isn't working yet I believe.
-    /*
+    
     rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
     rssi_analog_source->set_pin(rssi_analog_pin);
     float current_analog_voltage = rssi_analog_source->voltage_average();
-    */
-    
+        
     // Just for testing
-    float current_analog_voltage = 3.6;
+    //float current_analog_voltage = 3.6;
     
     // Voltage comes in as a float, but the common scaling/clipping/inverting routine takes ints so we convert.
     // (We lose some precision but millivolts shouldn't matter in this context.)
