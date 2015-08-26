@@ -33,7 +33,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Description: This selects an analog pin for the receiver RSSI voltage.
     // @Values: -1:Disabled, 0:APM2 A0, 1:APM2 A1, 13:APM2 A13, 103:Pixhawk SBUS
     // @User: Standard
-//    AP_GROUPINFO("PIN", 1, AP_RSSI, rssi_analog_pin,  -1),
+    AP_GROUPINFO("PIN", 1, AP_RSSI, rssi_analog_pin,  -1),
 
     // @Param: RSSI_PIN_RANGE_LOW
     // @DisplayName: Receiver RSSI voltage low
