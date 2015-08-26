@@ -95,6 +95,8 @@ AP_RSSI::~AP_RSSI(void)
 // Initialize the rssi object and prepare it for use
 void AP_RSSI::init()
 {
+    // a pin for reading the receiver RSSI voltage. The scaling by 0.25 
+    // is to take the 0 to 1024 range down to an 8 bit range for MAVLink    
     rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);    
 }
 
