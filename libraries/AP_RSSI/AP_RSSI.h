@@ -36,6 +36,7 @@ public:
     // destructor
     ~AP_RSSI(void);
     
+    // parameter block
     static const struct AP_Param::GroupInfo var_info[];     
     
     // RSSI parameters
