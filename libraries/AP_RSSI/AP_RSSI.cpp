@@ -18,6 +18,7 @@
 
 extern const AP_HAL::HAL& hal;
 
+
 const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
                                 
     // @Param: RSSI_TYPE
@@ -83,7 +84,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
 // constructor
 AP_RSSI::AP_RSSI()
 {       
-    //AP_Param::setup_object_defaults(this, var_info);
+    AP_Param::setup_object_defaults(this, var_info);
     // Moving to routine; hopefully not too slow? This appears to crash when run here. 
     //rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
 }
@@ -97,7 +98,7 @@ AP_RSSI::~AP_RSSI(void)
 uint8_t AP_RSSI::read_receiver_rssi()
 {
     //hal.console->printf_P(PSTR("Number = %f\n"),your_number);    
-    hal.console->printf_P("Hitting AP_RSSI::read_receiver_rssi");    
+    //hal.console->printf_P("Hitting AP_RSSI::read_receiver_rssi");    
     
     // Default to 0 RSSI
     uint8_t receiver_rssi = 0;  

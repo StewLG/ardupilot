@@ -183,8 +183,7 @@ private:
     Compass compass;
 
     AP_InertialSensor ins;
-    
-    AP_RSSI rssi;    
+     
 
 #if RANGEFINDER_ENABLED == ENABLED
     // rangefinder
@@ -274,6 +273,9 @@ private:
 
     // Rally Ponints
     AP_Rally rally {ahrs};
+    
+    // RSSI 
+    AP_RSSI rssi;      
 
     // remember if USB is connected, so we can adjust baud rate
     bool usb_connected;
