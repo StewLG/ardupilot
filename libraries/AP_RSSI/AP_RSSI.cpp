@@ -102,7 +102,7 @@ void AP_RSSI::init()
 uint8_t AP_RSSI::read_receiver_rssi()
 {
     //hal.console->printf_P(PSTR("Number = %f\n"),your_number);    
-    hal.console->printf_P("Hitting AP_RSSI::read_receiver_rssi");    
+    //hal.console->printf_P("Hitting AP_RSSI::read_receiver_rssi");    
     
     // Default to 0 RSSI
     uint8_t receiver_rssi = 0;  
@@ -126,40 +126,17 @@ uint8_t AP_RSSI::read_receiver_rssi()
 
 // Private
 // -------
-
-// // read the RSSI value from an analog pin        
-// uint8_t AP_RSSI::read_pin_rssi()
-// {
-    // uint8_t pin_rssi = 0;    
- // avoid divide by zero
-    // if (rssi_range > 0) {    
-        // // Uh yeah this crashes here.
-        
-            // AP_Float     rssi_pin_range_low;                     // Voltage value for weakest rssi signal 
-            // AP_Float     rssi_pin_range_high;                    // Voltage value for strongest rssi signal
-        
-        // rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
-        // rssi_analog_source->set_pin(rssi_pin);
-        // float ret = rssi_analog_source->voltage_average() * 255 / rssi_range;
-        // pin_rssi = constrain_int16(ret, 0, 255);
-    // }
-    // return pin_rssi;
-//} 
         
 // read the RSSI value from an analog pin       
 uint8_t AP_RSSI::read_pin_rssi()
 {
     const int float_multipler = 1000;
         
-    // this isn't working yet I believe.
-        
-    //rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
     rssi_analog_source->set_pin(rssi_analog_pin);
     float current_analog_voltage = rssi_analog_source->voltage_average();
-    
-     
+         
     // Just for testing
-    //float current_analog_voltage = 3.6;
+    // current_analog_voltage = 3.6;
     
     // Voltage comes in as a float, but the common scaling/clipping/inverting routine takes ints so we convert.
     // (We lose some precision but millivolts shouldn't matter in this context.)
