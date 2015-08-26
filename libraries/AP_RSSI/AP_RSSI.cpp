@@ -108,7 +108,7 @@ uint8_t AP_RSSI::read_receiver_rssi()
             receiver_rssi = 0;
             break;
         case RssiType::RSSI_ANALOG_PIN :
-            //receiver_rssi = read_pin_rssi();
+            receiver_rssi = read_pin_rssi();
             break;
         case RssiType::RSSI_RC_CHANNEL_VALUE :
             receiver_rssi = read_channel_rssi();
