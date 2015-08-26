@@ -101,9 +101,6 @@ void AP_RSSI::init()
 // read the receiver RSSI value as an 8 bit number
 uint8_t AP_RSSI::read_receiver_rssi()
 {
-    //hal.console->printf_P(PSTR("Number = %f\n"),your_number);    
-    //hal.console->printf_P("Hitting AP_RSSI::read_receiver_rssi");    
-    
     // Default to 0 RSSI
     uint8_t receiver_rssi = 0;  
             
@@ -134,10 +131,7 @@ uint8_t AP_RSSI::read_pin_rssi()
         
     rssi_analog_source->set_pin(rssi_analog_pin);
     float current_analog_voltage = rssi_analog_source->voltage_average();
-         
-    // Just for testing
-    // current_analog_voltage = 3.6;
-    
+             
     // Voltage comes in as a float, but the common scaling/clipping/inverting routine takes ints so we convert.
     // (We lose some precision but millivolts shouldn't matter in this context.)
     int rssi_pin_current_voltage_int_value = convert_float_to_int_with_multiplier(current_analog_voltage, float_multipler); 
