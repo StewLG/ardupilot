@@ -168,34 +168,6 @@ uint8_t AP_RSSI::read_pin_rssi()
     return voltage_rssi;    
 }
 
-
-// // read the RSSI value from a PWM value on a RC channel
-// uint8_t AP_RSSI::read_channel_rssi()
-// {
-    // uint8_t channel_rssi = 0;        
-    
-    // int rssi_channel_value = hal.rcin->read(rssi_channel-1);
-    // // Note that user-supplied PWM range may be inverted and we accommodate that here. 
-    // //(Some radio receivers put out inverted PWM ranges for RSSI-type values).
-    // bool pwm_range_is_inverted = (rssi_channel_high_pwm_value < rssi_channel_low_pwm_value);
-    // // First, constrain to the possible PWM range - values outside are clipped to ends 
-    // int rssi_channel_value_clipped = constrain_int16(rssi_channel_value, 
-                                                     // pwm_range_is_inverted ? rssi_channel_high_pwm_value : rssi_channel_low_pwm_value, 
-                                                     // pwm_range_is_inverted ? rssi_channel_low_pwm_value : rssi_channel_high_pwm_value);
-    // // Then scale to 0-255 RSSI normally is presented in.
-    // int rssi_channel_range = abs(rssi_channel_high_pwm_value - rssi_channel_low_pwm_value);
-    // if (rssi_channel_range == 0) {
-        // // User range isn't meaningful, return 0 for RSSI (and avoid divide by zero)
-        // channel_rssi = 0;
-    // } else {
-        // float conversion_ratio = (float)255 / (float)rssi_channel_range;
-        // int rssi_channel_offset = abs(rssi_channel_value_clipped - rssi_channel_low_pwm_value);
-        // channel_rssi = (int)(rssi_channel_offset * conversion_ratio);
-        // channel_rssi = constrain_int16(channel_rssi, 0, 255);
-    // }   
-    // return channel_rssi;
-// }
-
 // read the RSSI value from a PWM value on a RC channel
 uint8_t AP_RSSI::read_channel_rssi()
 {
