@@ -152,15 +152,14 @@ uint8_t AP_RSSI::read_pin_rssi()
     const int float_multipler = 1000;
         
     // this isn't working yet I believe.
-    
-    /*
-    rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
+        
+    //rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
     rssi_analog_source->set_pin(rssi_analog_pin);
     float current_analog_voltage = rssi_analog_source->voltage_average();
-    */
+    
      
     // Just for testing
-    float current_analog_voltage = 3.6;
+    //float current_analog_voltage = 3.6;
     
     // Voltage comes in as a float, but the common scaling/clipping/inverting routine takes ints so we convert.
     // (We lose some precision but millivolts shouldn't matter in this context.)
