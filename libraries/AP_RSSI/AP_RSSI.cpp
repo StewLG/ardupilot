@@ -49,7 +49,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Volt
     // @Values: 0.0: 0V, 3.3:3.3V, 5.0:5V. Intermedidate values OK.
     // @User: Standard
-//    AP_GROUPINFO("PIN_RANGE_HIGH", 3, AP_RSSI, rssi_analog_pin_range_high, 5.0f),
+    AP_GROUPINFO("PIN_HIGH", 3, AP_RSSI, rssi_analog_pin_range_high, 5.0f),
     
     // @Param: RSSI_CHANNEL
     // @DisplayName: Receiver RSSI channel number
@@ -57,7 +57,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: 
     // @Values: 0:Disabled,1:Channel1,2:Channel2,3:Channel3,4:Channel4,5:Channel5,6:Channel6,7:Channel7,8:Channel8
     // @User: Standard
-//    AP_GROUPINFO("CHANNEL", 4, AP_RSSI, rssi_channel,  0),
+    AP_GROUPINFO("CHANNEL", 4, AP_RSSI, rssi_channel,  0),
     
     // @Param: RSSI_CHAN_LOW
     // @DisplayName: Receiver RSSI PWM low value
@@ -65,7 +65,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Microseconds
     // @Range: 0 2000
     // @User: Standard
-//    AP_GROUPINFO("CHAN_LOW", 5, AP_RSSI, rssi_channel_low_pwm_value,  1000),
+    AP_GROUPINFO("CHAN_LOW", 5, AP_RSSI, rssi_channel_low_pwm_value,  1000),
     
     // @Param: RSSI_CHAN_HIGH
     // @DisplayName: Receiver RSSI PWM high value
@@ -73,7 +73,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Units: Microseconds
     // @Range: 0 2000
     // @User: Standard
-//    AP_GROUPINFO("CHAN_HIGH", 6, AP_RSSI, rssi_channel_high_pwm_value,  2000),
+    AP_GROUPINFO("CHAN_HIGH", 6, AP_RSSI, rssi_channel_high_pwm_value,  2000),
     
     AP_GROUPEND
 };
