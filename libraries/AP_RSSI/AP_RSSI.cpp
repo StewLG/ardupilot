@@ -102,8 +102,7 @@ uint8_t AP_RSSI::read_receiver_rssi()
     
     // Default to 0 RSSI
     uint8_t receiver_rssi = 0;  
-        
-    /*
+            
     switch (rssi_type) {
         case RssiType::RSSI_DISABLED :
             receiver_rssi = 0;
@@ -112,12 +111,11 @@ uint8_t AP_RSSI::read_receiver_rssi()
             //receiver_rssi = read_pin_rssi();
             break;
         case RssiType::RSSI_RC_CHANNEL_VALUE :
-            //receiver_rssi = read_channel_rssi();
+            receiver_rssi = read_channel_rssi();
             break;
         default :   
             receiver_rssi = 0;      
-    }
-    */
+    }    
          
     return receiver_rssi;
 }
@@ -161,20 +159,15 @@ uint8_t AP_RSSI::read_pin_rssi()
     
     // Voltage comes in as a float, but the common scaling/clipping/inverting routine takes ints so we convert.
     // (We lose some precision but millivolts shouldn't matter in this context.)
-    int rssi_pin_current_voltage_int_value = convert_float_to_int(current_analog_voltage, float_multipler); 
-    int rssi_pin_low_voltage_int_value = convert_float_to_int(rssi_analog_pin_range_low, float_multipler);
-    int rssi_pin_high_voltage_int_value = convert_float_to_int(rssi_analog_pin_range_high, float_multipler);    
+    int rssi_pin_current_voltage_int_value = convert_float_to_int_with_multiplier(current_analog_voltage, float_multipler); 
+    int rssi_pin_low_voltage_int_value = convert_float_to_int_with_multiplier(rssi_analog_pin_range_low, float_multipler);
+    int rssi_pin_high_voltage_int_value = convert_float_to_int_with_multiplier(rssi_analog_pin_range_high, float_multipler);    
         
     // Scale and constrain integer
     uint8_t voltage_rssi = scale_and_constrain_integer_rssi(rssi_pin_current_voltage_int_value, rssi_pin_low_voltage_int_value, rssi_pin_high_voltage_int_value);
     return voltage_rssi;    
 }
 
-// Convert a float to an int, using given multiplier first
-int AP_RSSI::convert_float_to_int(float value, int float_multipler)
-{
-    return static_cast<int>(round(value * float_multipler));    
-}
 
 // // read the RSSI value from a PWM value on a RC channel
 // uint8_t AP_RSSI::read_channel_rssi()
@@ -208,7 +201,13 @@ uint8_t AP_RSSI::read_channel_rssi()
 {
     int rssi_channel_value = hal.rcin->read(rssi_channel-1);
     uint8_t channel_rssi = scale_and_constrain_integer_rssi(rssi_channel_value, rssi_channel_low_pwm_value, rssi_channel_high_pwm_value);
-    return channel_rssi;
+    return channel_rssi;    
+}
+
+// Convert a float to an int, using given multiplier first
+int AP_RSSI::convert_float_to_int_with_multiplier(float value, int float_multipler)
+{
+    return static_cast<int>(round(value * float_multipler));    
 }
 
 // Scale and constrain an integer rssi value to the 0-255 value RSSI is expressed in

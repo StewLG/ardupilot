@@ -96,6 +96,6 @@ void Plane::read_receiver_rssi(void)
         // float ret = rssi_analog_source->voltage_average() * 255 / g.rssi_range;
         // receiver_rssi = constrain_int16(ret, 0, 255);
     // }
-    rssi.read_receiver_rssi();
+    receiver_rssi = rssi.read_receiver_rssi();
 }
 

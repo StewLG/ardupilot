@@ -64,7 +64,7 @@ private:
     uint8_t read_channel_rssi();
     
     // Convert a float to an int, using given multiplier first  
-    int convert_float_to_int(float value, int float_multipler);
+    int convert_float_to_int_with_multiplier(float value, int float_multipler);
     
     // Scale and constrain an integer rssi value to the 0-255 value RSSI is expressed in    
     uint8_t scale_and_constrain_integer_rssi(int current_rssi_value, int low_rssi_range, int high_rssi_range);
