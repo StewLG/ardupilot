@@ -86,7 +86,7 @@ AP_RSSI::AP_RSSI()
 {       
     AP_Param::setup_object_defaults(this, var_info);
     // Moving to routine; hopefully not too slow? This appears to crash when run here. 
-    rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
+    //rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
 }
 
 // destructor
@@ -98,7 +98,7 @@ AP_RSSI::~AP_RSSI(void)
 uint8_t AP_RSSI::read_receiver_rssi()
 {
     //hal.console->printf_P(PSTR("Number = %f\n"),your_number);    
-    //hal.console->printf_P("Hitting AP_RSSI::read_receiver_rssi");    
+    hal.console->printf_P("Hitting AP_RSSI::read_receiver_rssi");    
     
     // Default to 0 RSSI
     uint8_t receiver_rssi = 0;  
