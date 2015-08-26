@@ -251,9 +251,10 @@ private:
     // selected navigation controller
     AP_SpdHgtControl *SpdHgt_Controller = &TECS_controller;
 
+    // SLG -- Remove when sure
     // Analog Inputs
     // a pin for reading the receiver RSSI voltage. 
-    AP_HAL::AnalogSource *rssi_analog_source;
+    //AP_HAL::AnalogSource *rssi_analog_source;
 
     // Relay
     AP_Relay relay;
