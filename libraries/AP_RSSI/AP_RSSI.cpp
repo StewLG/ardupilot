@@ -26,7 +26,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Description: Radio Receiver RSSI type. If your radio receiver supports RSSI of some kind, set it here, then set its associated RSSI_XXXXX parameters, if any.
     // @Values: 0:Disabled,1:AnalogPin,2:RCChannelPwmValue
     // @User: Standard
-//    AP_GROUPINFO("TYPE", 0, AP_RSSI, rssi_type,  0),
+    AP_GROUPINFO("TYPE", 0, AP_RSSI, rssi_type,  0),
                 
     // @Param: RSSI_PIN
     // @DisplayName: Receiver RSSI sensing pin
