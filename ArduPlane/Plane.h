@@ -91,7 +91,6 @@
 #include <AP_Rally/AP_Rally.h>
 
 #include <AP_OpticalFlow/AP_OpticalFlow.h>     // Optical Flow library
-
 #include <AP_RSSI/AP_RSSI.h>                   // RSSI Library
 
 // Configuration
