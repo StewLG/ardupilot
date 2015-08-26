@@ -30,12 +30,6 @@ public:
         RSSI_RC_CHANNEL_VALUE   = 0x0002
     };
     
-    // constructor
-    AP_RSSI();
-
-    // destructor
-    ~AP_RSSI(void);
-    
     // parameter block
     static const struct AP_Param::GroupInfo var_info[];     
     
@@ -47,6 +41,15 @@ public:
     AP_Int8         rssi_channel;                           // allows rssi to be read from given channel as PWM value
     AP_Int16        rssi_channel_low_pwm_value;             // PWM value for weakest rssi signal
     AP_Int16        rssi_channel_high_pwm_value;            // PWM value for strongest rssi signal 
+
+    // constructor
+    AP_RSSI();
+
+    // destructor
+    ~AP_RSSI(void);        
+        
+    // Initialize the rssi object and prepare it for use
+    void init();
         
     // read the receiver RSSI value as an 8 bit number
     uint8_t read_receiver_rssi();

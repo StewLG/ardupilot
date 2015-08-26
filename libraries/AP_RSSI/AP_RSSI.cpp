@@ -85,13 +85,17 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
 AP_RSSI::AP_RSSI()
 {       
     AP_Param::setup_object_defaults(this, var_info);
-    // Moving to routine; hopefully not too slow? This appears to crash when run here. 
-    //rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);
 }
 
 // destructor
 AP_RSSI::~AP_RSSI(void)
 {       
+}
+
+// Initialize the rssi object and prepare it for use
+void AP_RSSI::init()
+{
+    rssi_analog_source = hal.analogin->channel(ANALOG_INPUT_NONE);    
 }
 
 // read the receiver RSSI value as an 8 bit number
