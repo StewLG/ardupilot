@@ -25,7 +25,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Param: RSSI_TYPE
     // @DisplayName: RSSI Type
     // @Description: Radio Receiver RSSI type. If your radio receiver supports RSSI of some kind, set it here, then set its associated RSSI_XXXXX parameters, if any.
-    // @Values: 0:Disabled,1:AnalogPin,2:RCChannelPwmValue
+    // @Values: 0:Disabled,1:AnalogPin,2:RCChannelPwmValue,3:SBUSLinkQuality
     // @User: Standard
     AP_GROUPINFO("TYPE", 0, AP_RSSI, rssi_type,  0),
                 
@@ -120,6 +120,9 @@ float AP_RSSI::read_receiver_rssi()
         case RssiType::RSSI_RC_CHANNEL_VALUE :
             receiver_rssi = read_channel_rssi();
             break;
+        case RssiType::SBUS_LINK_QUALITY :
+            receiver_rssi = read_sbus_link_quality();
+            break;
         default :   
             receiver_rssi = 0.0f;      
     }    
@@ -152,6 +155,12 @@ float AP_RSSI::read_channel_rssi()
     int rssi_channel_value = hal.rcin->read(rssi_channel-1);
     float channel_rssi = scale_and_constrain_float_rssi(rssi_channel_value, rssi_channel_low_pwm_value, rssi_channel_high_pwm_value);
     return channel_rssi;    
+}
+
+// read the SBUS Link Quality
+float AP_RSSI::read_sbus_link_quality()
+{
+    return hal.rcin->link_quality();
 }
 
 // Scale and constrain a float rssi value to 0.0 to 1.0 range 
