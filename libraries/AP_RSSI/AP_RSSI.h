@@ -42,8 +42,8 @@ public:
     AP_Int8         rssi_channel;                           // allows rssi to be read from given channel as PWM value
     AP_Int16        rssi_channel_low_pwm_value;             // PWM value for weakest rssi signal
     AP_Int16        rssi_channel_high_pwm_value;            // PWM value for strongest rssi signal         
-    AP_Float        rssi_sbus_low_value;                    // Receiver SBUS Link Quality low value
-    AP_Float        rssi_sbus_high_value;                   // Receiver SBUS Link Quality high value
+    AP_Int16        rssi_sbus_low_value;                    // Receiver SBUS Link Quality low value
+    AP_Int16        rssi_sbus_high_value;                   // Receiver SBUS Link Quality high value
     
 
     // constructor

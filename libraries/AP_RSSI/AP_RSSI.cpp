@@ -81,20 +81,20 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] PROGMEM = {
     // @Param: RSSI_SBUS_LOW
     // @DisplayName: Receiver SBUS Link Quality low value
     // @Description: The lowest value expected from the SBUS Link Quality metric. This is normally 0.0, which would happen when there is no signal.
-    // @Units:
-    // @Increment: 0.01
-    // @Range: 0 1.0
+    // @Units: Percent
+    // @Increment: 1
+    // @Range: 0 100
     // @User: Standard
-    AP_GROUPINFO("SBUS_LOW", 7, AP_RSSI, rssi_sbus_low_value,  0.0f),
+    AP_GROUPINFO("SBUS_LOW", 7, AP_RSSI, rssi_sbus_low_value, 0),
     
     // @Param: RSSI_SBUS_HIGH
     // @DisplayName: Receiver SBUS Link Quality high value
     // @Description: The lowest value expected from the SBUS Link Quality metric. This can be as high as 1.0, but may be lower depending on your particular hardware, since a certain level of frames dropped may be normal even at short distances.
-    // @Units:
-    // @Increment: 0.01
-    // @Range: 0 1.0
+    // @Units: Percent
+    // @Increment: 1
+    // @Range: 0 100
     // @User: Standard
-    AP_GROUPINFO("SBUS_HIGH", 8, AP_RSSI, rssi_sbus_high_value,  1.0f),
+    AP_GROUPINFO("SBUS_HIGH", 8, AP_RSSI, rssi_sbus_high_value, 100),
           
     AP_GROUPEND
 };
@@ -177,21 +177,15 @@ float AP_RSSI::read_channel_rssi()
 // read the SBUS Link Quality
 float AP_RSSI::read_sbus_link_quality()
 {
-    float current_link_quality = hal.rcin->link_quality();
-    // Is there a problem here? With the storage of floats in the AP_GROUPINFO maybe?
-    //return scale_and_constrain_float_rssi(current_link_quality, rssi_sbus_low_value, rssi_sbus_high_value);    
-    return scale_and_constrain_float_rssi(current_link_quality, 0.0f, 0.74f);    
-    //return current_link_quality;
+    float current_link_quality = hal.rcin->link_quality() * 100;
+    // We are expecting rcin::link_quality to give us 0.0 - 1.0, but let's be extra sure.
+    current_link_quality = constrain_float(current_link_quality, 0, 100);    
+    return scale_and_constrain_float_rssi(current_link_quality, rssi_sbus_low_value, rssi_sbus_high_value);    
 }
 
 // Scale and constrain a float rssi value to 0.0 to 1.0 range 
 float AP_RSSI::scale_and_constrain_float_rssi(float current_rssi_value, float low_rssi_range, float high_rssi_range)
 {   
-    const int SCALE_FACTOR = 1000;
-    current_rssi_value *= SCALE_FACTOR;
-    low_rssi_range *= SCALE_FACTOR;
-    high_rssi_range *= SCALE_FACTOR;
-        
     float rssi_value_range = abs(high_rssi_range - low_rssi_range);
     if ((int)rssi_value_range == (int)0) {
         // User range isn't meaningful, return 0 for RSSI (and avoid divide by zero)
