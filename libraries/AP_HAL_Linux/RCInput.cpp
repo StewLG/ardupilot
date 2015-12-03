@@ -54,6 +54,12 @@ uint16_t RCInput::read(uint8_t ch)
     return _pwm_values[ch];
 }
 
+/* Return the Link Quality of the RC link. 0.0 = worst quality, 1.0 = best quality. */
+float RCInput::link_quality() {
+    // Unimplemented
+    return 0.0f;
+}
+
 uint8_t RCInput::read(uint16_t* periods, uint8_t len) 
 {
     uint8_t i;
