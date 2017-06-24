@@ -146,7 +146,7 @@ float AP_RSSI::read_receiver_rssi()
             receiver_rssi = read_channel_rssi();
             break;
         case RssiType::RSSI_RECEIVER :
-            //receiver_rssi = read_receiver_protocol_rssi();
+            receiver_rssi = read_receiver_protocol_rssi();
             break;
         default :
             receiver_rssi = 0.0f;
@@ -187,13 +187,11 @@ float AP_RSSI::read_channel_rssi()
 float AP_RSSI::read_receiver_protocol_rssi()
 {
     float receiver_protocol_rssi = 0.0f;
-    /*
     int16_t rssi = hal.rcin->get_rssi();
     if (rssi != -1) {
         receiver_protocol_rssi = rssi / 255.0;
     }
-    receiver_protocol_rssi = scale_and_constrain_float_rssi(receiver_protocol_rssi, rssi_receiver_protocol_low_value, rssi_receiver_protocol_high_value);
-    */
+    //receiver_protocol_rssi = scale_and_constrain_float_rssi(receiver_protocol_rssi, rssi_receiver_protocol_low_value, rssi_receiver_protocol_high_value);
     return receiver_protocol_rssi;
 }
 
