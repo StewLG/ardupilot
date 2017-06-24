@@ -92,7 +92,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] = {
     // @Units: %
     // @Range: 0 100
     // @User: Standard
-    AP_GROUPINFO("RX_PRO_L", 7, AP_RSSI, rssi_channel_low_pwm_value,  0),
+    AP_GROUPINFO("RX_PRO_L", 7, AP_RSSI, rssi_receiver_protocol_low_value,  0),
 
     // @Param: RX_PRO_H
     // @DisplayName: Receiver Protocol high value
@@ -100,7 +100,7 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] = {
     // @Units: %
     // @Range: 0 100
     // @User: Standard
-    AP_GROUPINFO("RX_PRO_H", 8, AP_RSSI, rssi_channel_high_pwm_value,  100),
+    AP_GROUPINFO("RX_PRO_H", 8, AP_RSSI, rssi_receiver_protocol_high_value,  100),
     
     
     AP_GROUPEND
