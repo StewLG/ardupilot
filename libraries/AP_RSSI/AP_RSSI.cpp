@@ -191,7 +191,7 @@ float AP_RSSI::read_receiver_protocol_rssi()
     if (rssi != -1) {
         receiver_protocol_rssi = rssi / 255.0;
     }
-    //receiver_protocol_rssi = scale_and_constrain_float_rssi(receiver_protocol_rssi, rssi_receiver_protocol_low_value, rssi_receiver_protocol_high_value);
+    receiver_protocol_rssi = scale_and_constrain_float_rssi(receiver_protocol_rssi, rssi_receiver_protocol_low_value/100, rssi_receiver_protocol_high_value/100);
     return receiver_protocol_rssi;
 }
 
