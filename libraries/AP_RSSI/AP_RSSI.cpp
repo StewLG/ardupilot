@@ -86,6 +86,23 @@ const AP_Param::GroupInfo AP_RSSI::var_info[] = {
     // @User: Standard
     AP_GROUPINFO("CHAN_HIGH", 6, AP_RSSI, rssi_channel_high_pwm_value,  2000),
 
+    // @Param: RX_PRO_L
+    // @DisplayName: Receiver Protocol low value
+    // @Description: This is the percentage value that the radio receiver will report for the Reciever Protocol RSSI when the signal strength is the weakest.
+    // @Units: %
+    // @Range: 0 100
+    // @User: Standard
+    AP_GROUPINFO("RX_PRO_L", 7, AP_RSSI, rssi_channel_low_pwm_value,  0),
+
+    // @Param: RX_PRO_H
+    // @DisplayName: Receiver Protocol high value
+    // @Description: This is the percentage value that the radio receiver will report for the Reciever Protocol RSSI when the signal strength is the strongest.
+    // @Units: %
+    // @Range: 0 100
+    // @User: Standard
+    AP_GROUPINFO("RX_PRO_H", 8, AP_RSSI, rssi_channel_high_pwm_value,  100),
+    
+    
     AP_GROUPEND
 };
 
@@ -128,18 +145,14 @@ float AP_RSSI::read_receiver_rssi()
         case RssiType::RSSI_RC_CHANNEL_VALUE :
             receiver_rssi = read_channel_rssi();
             break;
-        case RssiType::RSSI_RECEIVER : {
-            int16_t rssi = hal.rcin->get_rssi();
-            if (rssi != -1) {
-                receiver_rssi = rssi / 255.0;
-            }
+        case RssiType::RSSI_RECEIVER :
+            //receiver_rssi = read_receiver_protocol_rssi();
             break;
-        }
-        default :   
+        default :
             receiver_rssi = 0.0f;
             break;
-    }    
-                  
+    }
+
     return receiver_rssi;
 }
 
@@ -168,6 +181,20 @@ float AP_RSSI::read_channel_rssi()
     uint16_t rssi_channel_value = hal.rcin->read(rssi_channel-1);
     float channel_rssi = scale_and_constrain_float_rssi(rssi_channel_value, rssi_channel_low_pwm_value, rssi_channel_high_pwm_value);
     return channel_rssi;    
+}
+
+// read the RSSI value from the Receiver Protocol
+float AP_RSSI::read_receiver_protocol_rssi()
+{
+    float receiver_protocol_rssi = 0.0f;
+    /*
+    int16_t rssi = hal.rcin->get_rssi();
+    if (rssi != -1) {
+        receiver_protocol_rssi = rssi / 255.0;
+    }
+    receiver_protocol_rssi = scale_and_constrain_float_rssi(receiver_protocol_rssi, rssi_receiver_protocol_low_value, rssi_receiver_protocol_high_value);
+    */
+    return receiver_protocol_rssi;
 }
 
 // Scale and constrain a float rssi value to 0.0 to 1.0 range 

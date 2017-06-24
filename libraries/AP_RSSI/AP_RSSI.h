@@ -61,6 +61,8 @@ private:
     AP_Int8         rssi_channel;                           // allows rssi to be read from given channel as PWM value
     AP_Int16        rssi_channel_low_pwm_value;             // PWM value for weakest rssi signal
     AP_Int16        rssi_channel_high_pwm_value;            // PWM value for strongest rssi signal
+    AP_Float        rssi_receiver_protocol_low_value;       // Receiver Protocol rssi low value
+    AP_Float        rssi_receiver_protocol_high_value;      // Receiver Protocol rssi high value    
 
     // Analog Inputs
     // a pin for reading the receiver RSSI voltage. 
@@ -72,6 +74,9 @@ private:
     // read the RSSI value from a PWM value on a RC channel
     float read_channel_rssi();
 
+    // read the RSSI value from the Receiver Protocol
+    float read_receiver_protocol_rssi();
+    
     // Scale and constrain a float rssi value to 0.0 to 1.0 range 
     float scale_and_constrain_float_rssi(float current_rssi_value, float low_rssi_range, float high_rssi_range);
 };
